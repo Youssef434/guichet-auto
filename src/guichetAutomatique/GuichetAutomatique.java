@@ -1,7 +1,6 @@
 package guichetAutomatique;
 
 import compte.Carte;
-import compte.Compte;
 import compte.TypeCarte;
 
 import java.util.Map;
@@ -19,11 +18,11 @@ public interface GuichetAutomatique {
     carte.removeFromSolde(valeur);
   }
 
-  void alimenterGA(Map<Integer, Integer> argents);
+  void alimenterGA(Map<Integer, Integer> argents, int papiers);
 
 
   private void avanceFonds(Carte carte, double valeur) {
-    if (carte.getTypeCarte() == TypeCarte.DEBIT) {
+    if (carte.getType() == TypeCarte.DEBIT) {
       return;
     }
 
