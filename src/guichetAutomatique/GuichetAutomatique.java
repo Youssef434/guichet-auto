@@ -17,6 +17,7 @@ public interface GuichetAutomatique {
   void deposer(Carte carte, int valeur);
 
   void alimenterGA(Map<Integer, Integer> argents, int papiers);
+  boolean isMontantValid(int montant);
 
   void payerFacture(Carte carte, Facture facture);
 

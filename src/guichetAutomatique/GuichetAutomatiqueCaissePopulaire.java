@@ -11,8 +11,9 @@ public final class GuichetAutomatiqueCaissePopulaire implements GuichetAutomatiq
   private Map<Integer, Integer> argents;
   private int papiers;
 
-  public GuichetAutomatiqueCaissePopulaire(Map<Integer, Integer> argents) {
+  public GuichetAutomatiqueCaissePopulaire(Map<Integer, Integer> argents, int papiers) {
     this.argents = argents;
+    this.papiers = papiers;
   }
 
   @Override
@@ -37,6 +38,31 @@ public final class GuichetAutomatiqueCaissePopulaire implements GuichetAutomatiq
     this.argents = this.argents.entrySet().stream()
         .map(entry -> Map.entry(entry.getKey(), entry.getValue() + argents.get(entry.getKey())))
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+  }
+
+  @Override
+  public boolean isMontantValid(int montant) {
+    int[] values = {100, 50, 20};
+
+    for (int value : values) {
+      if (montant == 0) return true;
+      if (montant < 0) return false;
+
+      montant -= value * Math.min(montant / value, argents.get(value));
+    }
+
+    return montant == 0;
+  }
+
+  public static void main(String[] args) {
+    GuichetAutomatique GAB = new GuichetAutomatiqueCaissePopulaire(
+        Map.of(
+            20, 11,
+            50, 1,
+            100, 2
+            ), 10);
+
+    System.out.println(GAB.isMontantValid(220));
   }
 
   @Override
