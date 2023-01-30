@@ -1,4 +1,4 @@
-package compte;
+package banque.carte;
 
 public enum FabricateurCarte {
   VISA,

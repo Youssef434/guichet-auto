@@ -1,31 +1,45 @@
 package guichetAutomatique;
 
-import compte.Carte;
-import compte.TypeCarte;
+import banque.Compte;
+import banque.carte.Carte;
+import banque.carte.TypeCarte;
+import facture.Facture;
 
+import java.util.List;
 import java.util.Map;
 
 public interface GuichetAutomatique {
   default double solde(Carte carte) {
     return carte.getSolde();
   }
-  default void tirer(Carte carte, double valeur) {
-    if (carte.getSolde() < valeur) {
-      avanceFonds(carte, valeur);
-      return;
-    }
+  boolean tirer(Carte carte, int valeur);
 
-    carte.removeFromSolde(valeur);
-  }
+  void deposer(Carte carte, int valeur);
 
   void alimenterGA(Map<Integer, Integer> argents, int papiers);
 
+  void payerFacture(Carte carte, Facture facture);
 
-  private void avanceFonds(Carte carte, double valeur) {
+  default void payerFactures(Carte carte, List<Facture> factures) {
+    factures.forEach(facture -> payerFacture(carte, facture));
+  }
+
+  default boolean avanceFonds(Carte carte, int valeur) {
     if (carte.getType() == TypeCarte.DEBIT) {
-      return;
+      return false;
     }
 
     carte.removeFromSolde(valeur);
+    return true;
+  }
+
+  void transferer(Carte carte, Compte beneficier, int montant);
+
+  private boolean isClientBanque(Carte carte) {
+    return this.getClass().equals(carte
+        .getCompte()
+        .getBanque()
+        .getGuichetAutomatique()
+        .getClass());
   }
 }

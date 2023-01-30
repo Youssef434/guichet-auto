@@ -1,4 +1,6 @@
-package compte;
+package banque.carte;
+
+import banque.Compte;
 
 import java.util.Random;
 
@@ -24,8 +26,12 @@ public final class Carte {
     return compte.getSolde();
   }
 
-  public void removeFromSolde(double value) {
+  public void removeFromSolde(int value) {
     compte.removeFromSolde(value);
+  }
+
+  public void addToSolde(int value) {
+    compte.addToSolde(value);
   }
 
   public int getCodePin() {
@@ -34,5 +40,9 @@ public final class Carte {
 
   public FabricateurCarte getFabricateur() {
     return fabricateur;
+  }
+
+  public Compte getCompte() {
+    return compte;
   }
 }
