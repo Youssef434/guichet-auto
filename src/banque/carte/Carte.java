@@ -5,17 +5,23 @@ import banque.Compte;
 import java.util.Random;
 
 public final class Carte {
+  private final int id;
   private final TypeCarte type;
   private final FabricateurCarte fabricateur;
   private final Compte compte;
 
   private final int codePin;
 
-  public Carte(TypeCarte type, Compte compte, FabricateurCarte fabricateur) {
+  public Carte(int id, TypeCarte type, Compte compte, FabricateurCarte fabricateur) {
+    this.id = id;
     this.type = type;
     this.compte = compte;
     this.fabricateur = fabricateur;
     codePin = new Random().nextInt(1111, 10000);
+  }
+
+  public int getId() {
+    return id;
   }
 
   public TypeCarte getType() {

@@ -54,17 +54,6 @@ public final class GuichetAutomatiqueCaissePopulaire implements GuichetAutomatiq
     return montant == 0;
   }
 
-  public static void main(String[] args) {
-    GuichetAutomatique GAB = new GuichetAutomatiqueCaissePopulaire(
-        Map.of(
-            20, 11,
-            50, 1,
-            100, 2
-            ), 10);
-
-    System.out.println(GAB.isMontantValid(220));
-  }
-
   @Override
   public void payerFacture(Carte carte, Facture facture) {
 
