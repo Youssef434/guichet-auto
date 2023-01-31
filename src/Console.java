@@ -1,15 +1,25 @@
 import banque.carte.Carte;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import guichetAutomatique.GuichetAutomatique;
 import guichetAutomatique.GuichetAutomatiqueCaissePopulaire;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public final class Console {
-  private static final List<Carte> cartes = Arrays.asList();
+  private static List<Carte> cartes = new ArrayList<>();
   static {
-    System.out.println(new GsonBuilder().setLenient().create().fromJson("files/cartes.json", Object.class));
+    try {
+      cartes = new GsonBuilder().setLenient().create().fromJson(
+          Files.newBufferedReader(Path.of("files/cartes.json")), new TypeToken<List<Carte>>() {}.getType());
+      System.out.println(cartes);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
   private static Carte currentCarte;
   private static final Scanner scanner = new Scanner(System.in);
@@ -69,6 +79,9 @@ public final class Console {
       case 3 -> {
         deposerArgent();
         menu();
+      }
+      default -> {
+        Main.jsonWriter(Path.of("files/cartes.json"), cartes);
       }
     }
   }

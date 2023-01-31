@@ -6,6 +6,7 @@ import guichetAutomatique.GuichetAutomatique;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 public final class Compte {
   private double solde;
@@ -42,5 +43,15 @@ public final class Compte {
 
   public List<Facture> getFactures() {
     return new ArrayList<>(factures);
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", Compte.class.getSimpleName() + "[", "]")
+        .add("solde=" + solde)
+        .add("banque=" + banque)
+        .add("client=" + client)
+        .add("factures=" + factures)
+        .toString();
   }
 }

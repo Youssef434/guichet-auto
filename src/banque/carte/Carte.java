@@ -3,6 +3,7 @@ package banque.carte;
 import banque.Compte;
 
 import java.util.Random;
+import java.util.StringJoiner;
 
 public final class Carte {
   private final int id;
@@ -50,5 +51,16 @@ public final class Carte {
 
   public Compte getCompte() {
     return compte;
+  }
+
+  @Override
+  public String toString() {
+    return new StringJoiner(", ", Carte.class.getSimpleName() + "[", "]")
+        .add("id=" + id)
+        .add("type=" + type)
+        .add("fabricateur=" + fabricateur)
+        .add("compte=" + compte)
+        .add("codePin=" + codePin)
+        .toString();
   }
 }
