@@ -1,14 +1,16 @@
 import banque.carte.Carte;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import guichetAutomatique.GuichetAutomatique;
 import guichetAutomatique.GuichetAutomatiqueCaissePopulaire;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public final class Console {
-  private static final List<Carte> cartes = List.of();
+  private static final List<Carte> cartes = Arrays.asList();
+  static {
+    System.out.println(new GsonBuilder().setLenient().create().fromJson("files/cartes.json", Object.class));
+  }
   private static Carte currentCarte;
   private static final Scanner scanner = new Scanner(System.in);
   private static final GuichetAutomatique guichetAutomatique = new GuichetAutomatiqueCaissePopulaire(
